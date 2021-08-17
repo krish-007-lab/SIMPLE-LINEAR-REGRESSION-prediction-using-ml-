@@ -1,0 +1,76 @@
+data = pd.read_csv("https://raw.githubusercontent.com/AdiPersonalWorks/Random/master/student_scores%20-%20student_scores.csv")
+
+data.head()
+
+data.shape
+
+data.describe()
+
+data.info()
+
+sns.scatterplot(x ='Hours',y ='Scores',data=data).set(title ='Hours vs Scores')
+
+sns.countplot(x='Scores',data=data,color='blue')
+
+sns.countplot(x='Hours',data=data,color='red')
+
+sns.barplot(x='Hours',y='Scores',data=data, color='grey')
+
+sns.pairplot(data)
+
+sns.boxplot(x='Hours',data=data)
+
+sns.boxplot(x='Scores',data=data)
+
+sns.set_style('whitegrid') 
+sns.displot(data['Scores'],kde =True, color ='red', bins = 5)
+
+sns.set_style('whitegrid') 
+sns.displot(data['Hours'],kde =True, color ='red', bins = 5)
+
+x=data.iloc[:,:-1].values
+y=data.iloc[:,1].values
+print(x)
+print(y)
+
+"BREAKDOWN OF THE DATA"
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train , y_test = train_test_split(x, y, test_size=0.2, random_state=0)
+
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+model.fit(x_train, y_train)
+
+print(model.intercept_)
+print(model.coef_)
+
+"PLOTTING THE REGRESSION LINE"
+
+pred=model.predict(x)
+
+
+
+plt.scatter(x,y)
+plt.plot(x,pred)
+
+plt.show()
+
+
+print(y)
+print(pred)
+
+from sklearn import metrics
+print('Mean Absolute Error:',
+        metrics.mean_absolute_error(y, pred))
+        
+        
+        "INPUT AS STUDY HOURS AND OUTPUT AS SCORES"
+        
+        hours=np.array([9.25])
+hours=hours.reshape(1,-1)
+pred=model.predict(hours)
+
+print('score obtained: ',pred)
+
+"Ans: predicted score is 93 if a student is studies for 9.25 hours per day"
